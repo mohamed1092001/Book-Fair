@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mobadra</title>
+    <style>
+        @font-face {
+            font-family: 'Effra';
+            src: url('effra.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* global */
+
+        * {
+            margin: 0%;
+            padding: 0%;
+            box-sizing: border-box;
+            color: #fff;
+            text-transform: capitalize;
+            border: none;
+            outline: none;
+            background-color: transparent;
+            font-family: 'Effra';
+        }
+
+        .ar-mode {
+            direction: rtl;
+        }
+
+        .en-mode {
+            direction: ltr;
+        }
+
+        body {
+            background-color: rgb(26, 26, 26);
+        }
+
+        .dimensions {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 200%;
+            left: 200%;
+        }
+
+        .dimensions img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .screen-dimensions {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .hero {
+            background-image: url(Capture.png);
+        }
+
+        .btn-con{
+            width: 100%;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-con a{
+            display: block;
+            width: 80%;
+            text-decoration: none;
+            text-align: center;
+            padding: 10px 0px;
+            border-radius: 4px;
+        }
+
+        .btn-con a:nth-child(1){
+            background-color: #0f2937;
+        }
+        .btn-con a:nth-child(2){
+            background-color: #90b7b3;
+        }
+        .btn-con a:nth-child(3){
+            background-color: #6a1843;
+        }
+        .btn-con a:nth-child(4){
+            background-color: #fc9317;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="dimensions">
+        <img src="screen.png" alt="">
+    </div>
+
+    <div class="hero screen-dimensions" style="display: flex;flex-direction: column;justify-content: center;align-items: center;gap: 5vh;">
+        <img src="logo.svg" style="width: 70%;display: block;">
+        <div class="btn-con" style="display: flex;
+        flex-direction: column;">
+            <a href="https://lptc-final.vercel.app/">قطاع الترجمة</a>
+            <a href="https://mobadra2.vercel.app/">قطاع النشر</a>
+            <a href="https://mobadra3.vercel.app/">قطاع الأدب</a>
+            <a href="https://mobadra-4.vercel.app/">قطاع الشراكات</a>
+        </div>
+    </div>
+
+    <script src="jquery-3.7.1.js"></script>
+    <script>
+        $(document).ready(function () {
+            function calculateImageSize() {
+                var $img = $(".dimensions img");
+                var $container = $img.parent();
+
+                var containerWidth = $container.width();
+                var containerHeight = $container.height();
+
+                var naturalWidth = $img[0].naturalWidth;
+                var naturalHeight = $img[0].naturalHeight;
+
+                // حساب النسبة
+                var widthRatio = containerWidth / naturalWidth;
+                var heightRatio = containerHeight / naturalHeight;
+                var scale = Math.min(widthRatio, heightRatio);
+
+                // العرض والارتفاع بعد التحجيم
+                var fittedWidth = naturalWidth * scale;
+                var fittedHeight = naturalHeight * scale;
+
+                
+                // حساب حجم الخط بناءً على أصغر بُعد
+                var minDimension = Math.min(fittedWidth, fittedHeight);
+                var fontSize = minDimension;
+
+                $(".screen-dimensions").css({ "width": fittedWidth + 'px', "height": fittedHeight + 'px' })
+
+                $(".btn-con a").css("font-size", (fontSize * .05) + 'px');
+            }
+
+            // أول مرة لما الصفحة تتحمل
+            calculateImageSize();
+
+            // لما يحصل تغيير في حجم الشاشة
+            $(window).on('resize', function () {
+                calculateImageSize();
+            });
+        })
+
+    </script>
+</body>
+
+</html>
